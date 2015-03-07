@@ -10,7 +10,9 @@ KVM 虚拟机自动部署脚本，可以自动化的完成kvm虚拟机的部署�
 
 使用前提条件：
 
-1 Windows、Linux系统按照帮助文档要求制作镜像；
+1 Windows、Linux系统按照帮助文档要求制作镜像:
+
+Windows 镜像制作请参考Windows_img_make,Linux镜像制作请参考Linux_img_make；
 
 2 宿主机上，镜像、虚拟机的存储路径为/datapool；
 
