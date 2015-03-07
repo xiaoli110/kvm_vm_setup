@@ -47,7 +47,17 @@ git clone https://github.com/xiaoli110/kvm_vm_setup
 
 \#url:http://172.16.1.100/
 
-此处如果指定url，回到url上去拉去虚拟机镜像，支持ftp、http方式，拉取方式为url加镜像名字，镜像名字为下面虚拟机配置文件中的镜像名字。
+vmurl1="ftp://ftpuser1:password@ftp.myimages.com:10021/"
+
+vmurl2="ftp://ftpuser2:password@ftp.myimages2.com:10021/"
+
+urlcount=2
+
+此处如果指定url，会到url上去拉去虚拟机镜像，支持ftp、http方式，拉取方式为url加镜像名字，镜像名字为下面虚拟机配置文件中的镜像名字。
+
+可以指定多个url，url名字依次为“vmurl1、vmurl2”，，通过“urlcount”指定具体有几个url地址，脚本会自动比较多个url的速度，需要在url里面放置一个200MB大小的名为“ratetest”的文件。
+
+
 
 vm,win2003ent32chs,win2003-138,20G,20G,2048,2,e1000,br1,br1,5921,10.10.10.21,255.255.255.0,10.10.10.1,192.168.122.138,255.255.255.0,none
 
