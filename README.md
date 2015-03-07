@@ -99,6 +99,30 @@ vmCpOnly 使用qcow2方式，直接复制镜像。
 
 4 CentOS7的虚拟机只支持在CentOS7的宿主机上进行配置。
 
+运行脚本
+
+使用命令
+
+python virtauto.py 就可以自动生成虚拟机。
+
+virtauto.py 帮助信息如下：
+
+kvm vm setup script
+
+-h, --help print this
+
+--vg,assige vg name,such as --vg=datavg,vg=vmVG
+
+default vg name is 'datavg' if not assige
+
+--config,assige config file name ,such as --config=vm.csv
+
+config file must in same directory and must be csv
+
+default config file name is 'vm.csv' if not assige
+
+--url,give path to download vm images,such as --url=ftp://user1:pass@172.16.1.100/
+
 
 
 
