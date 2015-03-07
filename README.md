@@ -20,7 +20,9 @@ Windows 镜像制作请参考Windows_img_make,Linux镜像制作请参考Linux_im
 
 4 宿主机系统只支持RHEL6/RHEL7、CentOS6/CentOS7、RHEL6/RHEL7衍生系统，本脚本通过调用Libvirt配置虚拟机，通过guestfish编辑虚拟机镜像，需要安装虚拟化组件、Libvirt组件、guestfish组件：
 
-yum install libvirt* libguest* -y
+首先需要运行firsh.sh脚本，会自动判断操作系统，并安装组件，升级操作系统。
+
+安装完成后重启系统，并启动libvirt服务。
 
 service libvirtd restart
 
