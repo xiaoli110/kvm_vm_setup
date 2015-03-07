@@ -11,4 +11,4 @@
 # that this script will be executed during boot.
 
 touch /var/lock/subsys/local
-sh /bin/setipbymac.sh centos7-190 10.20.102.1 10.20.102.190 255.255.255.0 52:54:00:EA:AB:77 172.16.2.190 255.255.255.0 52:54:00:28:16:B7
+sh /bin/setipbymac.sh centos7-12 12.12.12.1 12.12.12.12 255.255.255.0 52:54:00:EA:AB:77 172.0.0.12 255.255.255.0 52:54:00:28:16:B7
