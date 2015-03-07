@@ -31,7 +31,7 @@ git clone https://github.com/xiaoli110/kvm_vm_setup
 
 2 编辑vm.csv文件，格式如下：
 
-#vmflag,template,name,disk1_size,disk2_size,mem_size,cpu_num,nic_type,nic1_bridge,nic2_bridge,vnc_port,outip,outmask,outgw,inip,inmask,ingw
+##vmflag,template,name,disk1_size,disk2_size,mem_size,cpu_num,nic_type,nic1_bridge,nic2_bridge,vnc_port,outip,outmask,outgw,inip,inmask,ingw
 
 #vm template name must be ''win2003ent32chs' 'win2003ent64chs' 'win2008ent64chs' 'centos56x64' 'ubuntu1204X64'
 
