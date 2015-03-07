@@ -1,0 +1,83 @@
+<domain type='kvm' id='10'>
+  <name>vmname</name>
+  <memory>vmmem</memory>
+  <currentMemory>vmmem</currentMemory>
+  <vcpu>vmcpu</vcpu>
+  <os>
+    <type arch='x86_64' machine='rhel6.1.0'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <cpu match='exact'>
+    <model>Westmere</model>
+    <vendor>Intel</vendor>
+    <feature policy='require' name='tm2'/>
+    <feature policy='require' name='est'/>
+    <feature policy='require' name='vmx'/>
+    <feature policy='require' name='ds'/>
+    <feature policy='require' name='ss'/>
+    <feature policy='require' name='vme'/>
+    <feature policy='require' name='rdtscp'/>
+    <feature policy='require' name='ht'/>
+    <feature policy='require' name='dca'/>
+    <feature policy='require' name='pbe'/>
+    <feature policy='require' name='tm'/>
+    <feature policy='require' name='pdpe1gb'/>
+    <feature policy='require' name='ds_cpl'/>
+    <feature policy='require' name='xtpr'/>
+    <feature policy='require' name='acpi'/>
+    <feature policy='require' name='monitor'/>
+  </cpu>
+  <clock offset='localtime'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <emulator>/usr/libexec/qemu-kvm</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='none' io='native'/>
+      <source file='/datapool/vmvda'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='none' io='native'/>
+      <source file='/datapool/vmvdb'/>
+      <target dev='vdb' bus='virtio'/>
+    </disk>
+    <interface type='bridge'>
+      <mac address='mac1'/>
+      <source bridge='vmbr1'/>
+      <model type='vmbr1type'/>
+    </interface>
+    <interface type='bridge'>
+      <mac address='mac2'/>
+      <source bridge='vmbr2'/>
+      <model type='vmbr2type'/>
+    </interface>
+    <serial type='pty'>
+      <source path='/dev/pts/3'/>
+      <target port='0'/>
+      <alias name='serial0'/>
+    </serial>
+    <console type='pty' tty='/dev/pts/3'>
+      <source path='/dev/pts/3'/>
+      <target type='serial' port='0'/>
+    </console>
+    <input type='tablet' bus='usb'>
+    </input>
+    <input type='mouse' bus='ps2'/>
+    <graphics type='vnc' port='vncport' autoport='no'/>
+    <video>
+      <model type='vga' vram='9216' heads='1'/>
+      <alias name='video0'/>
+    </video>
+    <memballoon model='virtio'>
+      <alias name='balloon0'/>
+    </memballoon>
+  </devices>
+</domain>
+
