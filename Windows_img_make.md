@@ -382,7 +382,7 @@ Windows Server 2003的封装方法如下：
 
 （1）在Windows Server 2003系统安装光盘中找到SUPPORT目录下TOOLS文件夹，将DEPLOY.CAB内的所有文件解压到到C盘Sysprep文件夹。
 
-（2）运行其中的sysprep.exe，在下一步的封装主界面中选“重新封装”。
+（2）运行其中的sysprep.exe，在下一步的封装主界面中选“重新封装”。 
 
 （3）大概10-20秒封装准备完成后，系统自动关机。
 
