@@ -31,46 +31,47 @@ git clone https://github.com/xiaoli110/kvm_vm_setup
 
 2 编辑vm.csv文件，格式如下：
 
-##vmflag,template,name,disk1_size,disk2_size,mem_size,cpu_num,nic_type,nic1_bridge,nic2_bridge,vnc_port,outip,outmask,outgw,inip,inmask,ingw
+\#vmflag,template,name,disk1_size,disk2_size,mem_size,cpu_num,nic_type,nic1_bridge,nic2_bridge,vnc_port,outip,outmask,outgw,inip,inmask,ingw
 
-#vm template name must be ''win2003ent32chs' 'win2003ent64chs' 'win2008ent64chs' 'centos56x64' 'ubuntu1204X64'
+\#vm template name must be ''win2003ent32chs' 'win2003ent64chs' 'win2008ent64chs' 'centos56x64' 'ubuntu1204X64'
 
-#keyword vmLvm means create lvm for vm,default vg is datavg
+\#keyword vmLvm means create lvm for vm,default vg is datavg
 
-#keyword vmCpOnly means not resize images , just cp imaiges,default vg is datavg
+\#keyword vmCpOnly means not resize images , just cp imaiges,default vg is datavg
 
-#kerword url: means download vm images path,like 
+\#kerword url: means download vm images path,like 
 
-#url:http://172.16.1.100/
+\#url:http://172.16.1.100/
 
+此处如果指定url，回到url上去拉去虚拟机镜像，支持ftp、http方式，拉取方式为url加镜像名字，镜像名字为下面虚拟机配置文件中的镜像名字。
 
-#vm,win2003ent32chs,win2003-138,20G,20G,2048,2,e1000,br1,br1,5921,10.10.10.21,255.255.255.0,10.10.10.1,192.168.122.138,255.255.255.0,none
+vm,win2003ent32chs,win2003-138,20G,20G,2048,2,e1000,br1,br1,5921,10.10.10.21,255.255.255.0,10.10.10.1,192.168.122.138,255.255.255.0,none
 
-#vmLvm,win2003ent32chs,virt1-lab-222,10G,10G,2048,2,e1000,br2,br2,59222,10.0.0.222,255.0.0.0,10.0.0.1,172.16.2.222,255.255.255.0,none
+vmLvm,win2003ent32chs,virt1-lab-222,10G,10G,2048,2,e1000,br2,br2,59222,10.0.0.222,255.0.0.0,10.0.0.1,172.16.2.222,255.255.255.0,none
 
-#vm,win2003ent32chs,virt1-lab-29,10G,100G,2048,2,e1000,br1,br1,5929,10.0.0.29,255.0.0.0,10.0.0.1,172.16.2.29,255.255.255.0,none
+vm,win2003ent32chs,virt1-lab-29,10G,100G,2048,2,e1000,br1,br1,5929,10.0.0.29,255.0.0.0,10.0.0.1,172.16.2.29,255.255.255.0,none
 
-#vm,win2003ent64chs,virt1-lab-23,10G,100G,2048,2,e1000,br1,br1,5923,10.0.0.23,255.0.0.0,10.0.0.1,172.16.2.23,255.255.255.0,none
+vm,win2003ent64chs,virt1-lab-23,10G,100G,2048,2,e1000,br1,br1,5923,10.0.0.23,255.0.0.0,10.0.0.1,172.16.2.23,255.255.255.0,none
 
-#vm,win2008ent64chs,win2008-22,40G,20G,2048,2,e1000,br1,br1,5922,10.0.0.22,255.0.0.0,10.0.0.1,172.16.2.124,255.255.255.0,none
+vm,win2008ent64chs,win2008-22,40G,20G,2048,2,e1000,br1,br1,5922,10.0.0.22,255.0.0.0,10.0.0.1,172.16.2.124,255.255.255.0,none
 
-#vm,win2008ent64chs,win2008-23,40G,20G,2048,2,e1000,br1,br1,5923,10.0.0.23,255.0.0.0,10.0.0.1,172.16.2.125,255.255.255.0,none
+vm,win2008ent64chs,win2008-23,40G,20G,2048,2,e1000,br1,br1,5923,10.0.0.23,255.0.0.0,10.0.0.1,172.16.2.125,255.255.255.0,none
 
-#vmLvm,win2008ent64chs,virt1-lab-224,30G,10G,2048,2,e1000,br2,br2,59224,10.0.0.224,255.0.0.0,10.0.0.1,172.16.2.224,255.255.255.0,none
+vmLvm,win2008ent64chs,virt1-lab-224,30G,10G,2048,2,e1000,br2,br2,59224,10.0.0.224,255.0.0.0,10.0.0.1,172.16.2.224,255.255.255.0,none
 
-#vm,centos56x64,centos5-121,20G,20G,1048,2,virtio,br1,br1,5923,10.10.10.23,255.255.255.0,10.10.10.1,192.168.122.121,255.255.255.0,none
+vm,centos56x64,centos5-121,20G,20G,1048,2,virtio,br1,br1,5923,10.10.10.23,255.255.255.0,10.10.10.1,192.168.122.121,255.255.255.0,none
 
-#vm,ubuntu1204X64,ubuntu-120,30G,10G,1048,2,virtio,br0,virbr0,59120,10.10.10.120,255.255.255.0,10.10.10.1,192.168.122.120,255.255.255.0,none
+vm,ubuntu1204X64,ubuntu-120,30G,10G,1048,2,virtio,br0,virbr0,59120,10.10.10.120,255.255.255.0,10.10.10.1,192.168.122.120,255.255.255.0,none
 
-#vmCpOnly,centos6564.qcow2,centos65-8,30G,20G,2048,2,virtio,br1,br1,59008,10.10.10.8,255.255.255.0,10.10.10.1,172.16.2.8,255.255.255.0,none
+vmCpOnly,centos6564.qcow2,centos65-8,30G,20G,2048,2,virtio,br1,br1,59008,10.10.10.8,255.255.255.0,10.10.10.1,172.16.2.8,255.255.255.0,none
 
-#vm,centos6564.qcow2,centos65-9,30G,20G,2048,2,virtio,br1,br1,59009,10.10.10.9,255.255.255.0,10.10.10.1,172.16.2.9,255.255.255.0,none
+vm,centos6564.qcow2,centos65-9,30G,20G,2048,2,virtio,br1,br1,59009,10.10.10.9,255.255.255.0,10.10.10.1,172.16.2.9,255.255.255.0,none
 
-#vm,centos7.qcow2,centos7-189,120G,20G,4096,4,virtio,br0,br1,59189,10.20.102.189,255.255.255.0,10.20.102.1,172.16.2.189,255.255.255.0,none
+vm,centos7.qcow2,centos7-189,120G,20G,4096,4,virtio,br0,br1,59189,10.20.102.189,255.255.255.0,10.20.102.1,172.16.2.189,255.255.255.0,none
 
 vmCpOnly,centos7.qcow2,centos7-190,120G,20G,4096,4,virtio,br0,br1,59190,10.20.102.190,255.255.255.0,10.20.102.1,172.16.2.190,255.255.255.0,none
 
-#vm,win2012datacenter_chs,win2012-11,50G,20G,2048,2,e1000,br1,br1,5911,10.10.10.11,255.255.255.0,10.10.10.1,172.16.2.11,255.255.255.0,none
+vm,win2012datacenter_chs,win2012-11,50G,20G,2048,2,e1000,br1,br1,5911,10.10.10.11,255.255.255.0,10.10.10.1,172.16.2.11,255.255.255.0,none
 
 虚拟机生成配置文件信息如下：
 
