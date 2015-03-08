@@ -1,17 +1,13 @@
-Windows 虚拟机制作方法
+###Windows 虚拟机制作方法###
 
-目前在生产环境使用的Windows版本主要是Windows Server 2008 R2及Windows Server 2012 R2。
-
-本文以Windows Server 2008 R为例说明Windows系统镜像的制作方法，Windows Server 2012 R2制作方法非常类似，就不介绍了。
+目前在生产环境使用的Windows版本主要是Windows Server 2008 R2及Windows Server 2012 R2。本文以Windows Server 2008 R为例说明Windows系统镜像的制作方法，Windows Server 2012 R2制作方法非常类似，就不介绍了。
 
 本文也会简单介绍下Windows Server 2003镜像的制作注意点。
 
-需要说明的是，最新一代服务器已经不提供对Windows Server 2003驱动的支持 ，但是虚拟化对Windows Server 2003支持的很好。
-
-如果有老的业务需要使用Windows Server 2003，通过虚拟化提供支持也是很好的解决方案。
+需要说明的是，最新一代服务器已经不提供对Windows Server 2003驱动的支持 ，但是虚拟化对Windows Server 2003支持的很好。如果有老的业务需要使用Windows Server 2003，通过虚拟化提供支持也是很好的解决方案。
 
 
-1. Windows虚拟机的安装
+**1. Windows虚拟机的安装**
 
 （1）准备操作系统ISO文件
 
@@ -25,45 +21,32 @@ Windows虚拟机建议根据下表来配置：
 
 Windows 2003 系列	2个	512	            IDE       50GB	        e1000
 
-Windows 2008 系列	2个	2048	          IDE       100GB	        Virtio
+Windows 2008 系列	2个	2048	        IDE       100GB	        Virtio
 
-Windows 2012系列	4个	2048	          IDE       100GB	        Virtio
+Windows 2012系列	4个	2048	            IDE       100GB	        Virtio
 
 生成镜像的命令是：
 
 qemu-img create -f qcow2 sys.img -opreallocation=metadata 100G 
 
 为了传输管理方便，虚拟机镜像格式建议使用qcow2格式，要加上opreallocation=metadata参数。
-
 否则使用virt-install命令安装完成后虚拟机磁盘镜像会变为raw格式。
 
 1）关于Windows虚拟机镜像大小
 
-直接将镜像复制，不再进行磁盘和文件系统的扩展。
-
-这样做虽然牺牲了灵活性，但好处是生成虚拟机的时候速度要快很多。
-
-并且生成的虚拟机第二次重启的时候，没有文件系统长时间检查的问题。
-
+直接将镜像复制，不再进行磁盘和文件系统的扩展。这样做虽然牺牲了灵活性，但好处是生成虚拟机的时候速度要快很多。并且生成的虚拟机第二次重启的时候，没有文件系统长时间检查的问题。
 目前国内公有云大部分也都是通过复制镜像的方式进行部署。
 
 2）关于Windows系统网卡驱动的说明
 
-2014年上半年以前，我生产环境Windows虚拟机系统网卡使用e1000的网卡。
-
-因为使用Virtio的网卡，在Windows系统上一直有闪断的情况。
-
-但是到2014年底，最新发布的Virtio网卡Windows系统驱动，经过我在生产环境的检验，已经工作的非常稳定。
-
+2014年上半年以前，我生产环境Windows虚拟机系统网卡使用e1000的网卡。因为使用Virtio的网卡，在Windows系统上一直有闪断的情况。但是到2014年底，最新发布的Virtio网卡Windows系统驱动，经过我在生产环境的检验，已经工作的非常稳定。
 所以我又开始在生产环境使用Virtio网卡。
 
 3）关于Windows虚拟机系统的磁盘驱动
 
-开始安装系统的时候，建议磁盘驱动使用IDE方式，这样方便安装。
+开始安装系统的时候，建议磁盘驱动使用IDE方式，这样方便安装。系统安装之后，建议将驱动更换为Virtio，因为Virtio性能要好很多，具体的操作方法在后面介绍。
 
-系统安装之后，建议将驱动更换为Virtio，因为Virtio性能要好很多，具体的操作方法在后面介绍。
-
-（3）安装虚拟机
+(3）安装虚拟机
 
 安装虚机有很多种方法，比如使用Virt-Manager、virt-install这样的工具，也可以通过事先定义xml文件来安装虚拟机。
 
@@ -87,11 +70,7 @@ virt-install \
 
               --vncport=5910
 
-具体安装过程就不详细介绍了，但是Windows Server 2008 R2安装时候的分区需要注意。
-
-因为2008默认安装的时候会有一个100MB的隐藏分区，放一些系统引导文件，类似Linux系统的boot分区。
-
-但是这个分区在调整分区和文件系统的时候经常容易误导，如果不希望有这个分区，可以手工分区，方法如下：
+具体安装过程就不详细介绍了，但是Windows Server 2008 R2安装时候的分区需要注意。因为2008默认安装的时候会有一个100MB的隐藏分区，放一些系统引导文件，类似Linux系统的boot分区。但是这个分区在调整分区和文件系统的时候经常容易误导，如果不希望有这个分区，可以手工分区，方法如下：
 
 在光盘引导起来之后，按shift加F10键，会出现一个命令行界面，键入diskpart命令，进入Windows的命令行分区模式。
 
@@ -109,17 +88,11 @@ diskpart命令的详细使用可以输入help命令，查看帮助。
  
 虚拟机安装完成后，重要的就是如何配置虚拟机系统，下面介绍如何让制作的虚拟机符合自己的需求。
 
-2. 配置虚拟机 模版
+**2. 配置虚拟机 模版**
 
 （1）安装Virtio驱动
 
-KVM是使用硬件虚拟化辅助技术（如Intel VT-x、AMD-V）的虚拟化引擎，在CPU运行效率方面有硬件支持，效率是比较高的。
-
-KVM在I/O虚拟化方面，传统的方式是使用QEMU纯软件的方式来模拟I/O设备，其效率并不高。
-
-在KVM中，可以在虚拟机中使用半虚拟化驱动（Paravirtualized Drivers，PV Drivers）来提高I/O性能。
-
-因此在虚拟机的磁盘、网络尽量应使用Virtio设备。
+KVM是使用硬件虚拟化辅助技术（如Intel VT-x、AMD-V）的虚拟化引擎，在CPU运行效率方面有硬件支持，效率是比较高的。KVM在I/O虚拟化方面，传统的方式是使用QEMU纯软件的方式来模拟I/O设备，其效率并不高。在KVM中，可以在虚拟机中使用半虚拟化驱动（Paravirtualized Drivers，PV Drivers）来提高I/O性能。因此在虚拟机的磁盘、网络尽量应使用Virtio设备。
 
 1）安装硬盘Virtio驱动
 
@@ -135,24 +108,21 @@ virsh attach-disk vm --source /kvm/tmp.img --target vdb --persistent
 
 通过热插拔方式动态增加了一块硬盘后，会在资源管理器里提示发现新的硬盘。
 
-此时，将下载好的virto 驱动挂载到虚拟机。
-打开后会发现其包括多个文件夹，其中几个文件夹对应的系统是wnet为Windows 2003 Server，wlh为Windows Server 2008 。
+此时，将下载好的virto 驱动挂载到虚拟机。打开后会发现其包括多个文件夹，其中几个文件夹对应的系统是wnet为Windows 2003 Server，wlh为Windows Server 2008 。
 
-按照目前使用的Windows系统，安装相应目录里的驱动就行了。
-
-安装完成后，还需要更新虚拟机xml文件中有关系统盘的配置。
+按照目前使用的Windows系统，安装相应目录里的驱动就行了。安装完成后，还需要更新虚拟机xml文件中有关系统盘的配置。
 
 使用virsh edit vmname命令，进入虚拟机xml编辑模式，找到如下的行：
 
-<source file='/kvm/sys.img'/>
+<source file='/kvm/sys.img'/\>
 
-<target dev='hda' bus='ide'/>
+<target dev='hda' bus='ide'/\>
 
 将其修改为：
 
-<source file='/kvm/sys.img'/>
+<source file='/kvm/sys.img'/\>
 
-<target dev='vda' bus='virtio'/>
+<target dev='vda' bus='virtio'/\>
 
 参照上面的配置修改其他硬盘的xml部分，改完后关闭虚拟机，并启动。在设备管理器会发现原硬盘项已变成SCSI 。 
 
@@ -166,29 +136,27 @@ virsh attach-interface vm --type bridge --source br1 --model virtio
 
 新增网卡的xml配置如下：
 
-<interface type='bridge'>
+<interface type='bridge'\>
 
- <mac address='32:45:11:sf:5c:3d'/>
+ <mac address='32:45:11:sf:5c:3d'/\>
 
- <source bridge='br1'/>
+ <source bridge='br1'/\>
 
- <target dev='vnet3'/>
+ <target dev='vnet3'/\>
 
- <model type='Virtio'/>
+ <model type='Virtio'/\>
 
- <alias name='net2'/>
+ <alias name='net2'/\>
 
-<address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
+<address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/\>
 
-</interface> 
+</interface\> 
 
 在安装完网卡Virtio驱动后，参照上面的配置修改其他网卡的xml文件，重启虚机后，在设备管理器里会要求重新安装驱动，安装即可。
 
 （2）取消登录任务配置及清除任务栏记录
 
-Windows Server 2008 R2安装完成后，默认会启动初始任务配置及服务器管理器。
-
-为了避免打扰用户，勾选两个界面的“登录时不显示此窗口”选项。 
+Windows Server 2008 R2安装完成后，默认会启动初始任务配置及服务器管理器。为了避免打扰用户，勾选两个界面的“登录时不显示此窗口”选项。 
 
 为了让用户得到新建的虚拟机菜单栏没有残留的程序痕迹 ，建议删除菜单的历史程序启动记录。
 
@@ -201,16 +169,12 @@ Windows Server 2008 R2安装完成后，默认会启动初始任务配置及服�
 为了提高同一数据中心Windows系统补丁更新速度，节省带宽，可以统一配置所以Windows虚拟机到数据中心内部的更新源进行补丁更新。
 
 1）配置更新策略
-操作方法是，同时按Windows键和R键，在弹出的“运行”对话框中中输入gpedit.msc回车，然后会启动组策略编辑器。
-
-在组策略编辑器中依次选择“计算机配置”、“管理模板”、“Windows组件”、“Windows Update”。
+操作方法是，同时按Windows键和R键，在弹出的“运行”对话框中中输入gpedit.msc回车，然后会启动组策略编辑器。在组策略编辑器中依次选择“计算机配置”、“管理模板”、“Windows组件”、“Windows Update”。
 
 右边双击配置自动更新，选择“已启用”，配置自动更新选择“2-通知下载并通知安装”，还可以根据需要定义更新的时间。
  
 2）配置更新源
-还是上一步的Windows Update组策略，双击“指定intranet microsoft更新位置”。
-
-如果选择“未配置”单选按钮，此时系统将通过连接微站点自动更新。
+还是上一步的Windows Update组策略，双击“指定intranet microsoft更新位置”。如果选择“未配置”单选按钮，此时系统将通过连接微站点自动更新。
 
 在生产环境中一般我都会搭建自动安装服务器（WSUS）来实现加快更新速度和节省带宽的目的：
 

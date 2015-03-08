@@ -1,18 +1,19 @@
-kvm_vm_setup
-============
+##kvm\_vm\_setup##
+============================================================
+
 KVM 虚拟机自动部署脚本，可以自动化的完成kvm虚拟机的部署，包括ip注入。
 
-主要功能如下：
+##主要功能如下：##
 
 1 全自动的完成虚拟机生成、主机名、ip地址配置；
 
 2 支持Windows系统、RHEL6/RHEL7、CentOS6/CentOS7、RHEL6/RHEL7衍生系统、Ubuntu系统的部署，其它系统未做测试；
 
-使用前提条件：
+##使用前提条件：##
 
 1 Windows、Linux系统按照帮助文档要求制作镜像:
 
-Windows 镜像制作请参考Windows_img_make,Linux镜像制作请参考Linux_img_make；
+  Windows 镜像制作请参考Windows_img_make,Linux镜像制作请参考Linux_img_make；
 
 2 宿主机上，镜像、虚拟机的存储路径为/datapool；
 
@@ -27,11 +28,11 @@ Windows 镜像制作请参考Windows_img_make,Linux镜像制作请参考Linux_im
 service libvirtd restart
 
 
-使用方法：
+##使用方法：##
 
 1 下载脚本源代码
 
-git clone https://github.com/xiaoli110/kvm_vm_setup
+  git clone https://github.com/xiaoli110/kvm_vm_setup
 
 2 编辑vm.csv文件，格式如下：
 
@@ -89,7 +90,7 @@ vmCpOnly 使用qcow2方式，直接复制镜像。
 
 4 CentOS7的虚拟机只支持在CentOS7的宿主机上进行配置。
 
-运行脚本
+###运行脚本###
 
 使用命令
 
