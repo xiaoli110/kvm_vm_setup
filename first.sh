@@ -10,6 +10,7 @@ cd $selfpath
 # install guestfish libvirt
 yum install libguest* -y
 yum install libvirt* -y
+yum install virt* -y
 
 # setup el6 Base and winsupport
 hostos=`uname -r |grep el6`
