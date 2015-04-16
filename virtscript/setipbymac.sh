@@ -46,9 +46,9 @@ echo "++++++++++++++++++++++++++++++++++++++++++++++++"
 
 
 #************************get variable*********
-uname -r |grep el7
 mac1=$5
 mac2=$8
+uname -r |grep el7
 if [[ $? -eq 0   ]];then
     #typeset -i get_nic1_mac
     #get_nic1_mac="${mac1}"
