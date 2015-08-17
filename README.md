@@ -115,6 +115,14 @@ default config file name is 'vm.csv' if not assige
 --url,give path to download vm images,such as --url=ftp://user1:pass@172.16.1.100/
 
 
+##一个bug的临时修改方法：##
 
+目前脚本cpu模式使用的是host-passthrough，脚本跑完，cpu这里的xml文件是：
+<cpu match='exact'>
+  <model>host-passthrough</modle>
+</cpu>
+需要手动将这里修改为：
+<cpu mode='host-passthrough'/>
+否则虚拟机不能启动，这个应该是virt-install命令行的一个bug，后面准备增加一个功能，判断并替换。
 
 
